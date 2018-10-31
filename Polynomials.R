@@ -20,7 +20,7 @@ r.m <- mask(r, SC.AirBasin.t)
 
 # Plot the map
 tm_shape(r.m) + 
-  tm_raster(n=10, palette="RdBu", auto.palette.mapping=FALSE, 
+  tm_raster(n=10, palette="RdBu", midpoint = NA, 
             title="Predicted Ozone \n(in ppm)") +
   tm_shape(ozone.mean.spdf) + tm_dots(size=0.2) +
   tm_legend(legend.outside=TRUE)
@@ -29,6 +29,10 @@ tm_shape(r.m) +
 
 # Define the 2nd order polynomial equation
 f.2 <- as.formula(value ~ X + Y + I(X*X)+I(Y*Y) + I(X*Y))
+
+#f.2 <- as.formula(Precip_in ~ X + Y + I(X*X)+I(Y*Y) + I(X*Y))
+#f.2.poly <- lm(noisy.y ~ poly(q,3))
+#model <- lm(noisy.y ~ x + I(X^2) + I(X^3))
 
 # Add X and Y to P
 ozone.mean.spdf$X <- coordinates(ozone.mean.spdf)[,1]
@@ -46,7 +50,14 @@ r.m <- mask(r, SC.AirBasin.t)
 
 # Plot the map
 tm_shape(r.m) + 
-  tm_raster(n=10, palette="RdBu", auto.palette.mapping=FALSE,
+  tm_raster(n=10, palette="RdBu", midpoint = NA,
             title="Predicted Ozone \n(in ppm)") +
   tm_shape(ozone.mean.spdf) + tm_dots(size=0.2) +
   tm_legend(legend.outside=TRUE)
+
+summary(lm.1)
+summary(lm.2)
+confint(lm.1, level=0.95)
+confint(lm.2, level=0.95)
+plot(fitted(lm.1),residuals(lm.1),xlab="fitted",ylab="residuals",main=expression(1^st~Order~Polynomial~Regression~Model))
+plot(fitted(lm.2),residuals(lm.2),xlab="fitted",ylab="residuals",main=expression(2^nd~Order~Polynomial~Regression~Model))

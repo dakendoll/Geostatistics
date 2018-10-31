@@ -1,3 +1,10 @@
+library(rgdal)
+library(raster)
+library(sp)
+library(spatstat)
+library(gstat)
+library(maptools)
+library(tmap)
 #################################################
 ##Prepare Pollution Data
 
@@ -7,7 +14,7 @@ ozone = read.csv("OZONE_PICKDATA_2016-4-30.csv", header = T, sep = ",")
 
 #DATASET 2
 #Read the monitoring station spatial dataset as an OGR data object.
-monitor = readOGR(dsn = ".", layer = "airmonitoringstations")
+monitor = readOGR(dsn = ".", layer = "airmonitoringstations") #read in shapefile with readOGR()
 #Extract the monitoring stations for the South Coast (SC)
 SC.monitor = monitor[monitor$AIRBASIN %in% c("South Coast"),]
 #Reproject the data to a suitable projection. Here we use a UTM projection because of the scale of the analysis. 

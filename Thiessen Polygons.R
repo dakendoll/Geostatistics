@@ -16,7 +16,7 @@ proj4string(th) <- proj4string(ozone.mean.spdf)
 th.z     <- over(th, ozone.mean.spdf, fn=mean)
 th.spdf  <-  SpatialPolygonsDataFrame(th, th.z)
 
-# Finally, we'll clip the tessellated  surface to the Texas boundaries
+# Finally, we'll clip the tessellated surface to the Texas boundaries
 th.clp   <- raster::intersect(SC.AirBasin.t,th.spdf)
 
 # Map the data
